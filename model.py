@@ -82,6 +82,8 @@ def _preprocess_data(data):
 
         data_table["Valencia_pressure"] = data_table["Valencia_pressure"].fillna(vp_mean)
 
+        data_table = data_table.fillna(0)
+
         return data_table
 
 
