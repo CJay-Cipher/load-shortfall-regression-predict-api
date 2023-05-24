@@ -58,22 +58,20 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
 
     # ----------- Replace this code with your own preprocessing steps --------
-    #2 Create a function to change datatypes and deal with missing values
+    # predict_vector = feature_vector_df[['Madrid_wind_speed','Bilbao_rain_1h','Valencia_wind_speed']]
 
-    # 1. create a function to change datatypes and deal with missing values
     def data_cleaning_one(data_table):
-
         data_table = data_table.copy()
-        
+
         data_table = data_table.drop("Unnamed: 0", axis=1)
-        
+
         data_table["time"] = data_table["time"].str.replace("-","").str.replace(":","").str.replace(" ","")
 
         data_table["date"] = data_table["time"].str[:8].astype(int)
 
         data_table["time_in_hrs"] = data_table["time"].str[8:10].astype(int)
         data_table = data_table.drop("time", axis=1)
-        
+
         data_table["Valencia_wind_deg"] = data_table["Valencia_wind_deg"].str.strip().str.replace("level_", "")
         data_table["Valencia_wind_deg"] = data_table["Valencia_wind_deg"].astype(int)
 
@@ -83,33 +81,33 @@ def _preprocess_data(data):
         vp_mean = round(data_table["Valencia_pressure"].mean(), 6)
 
         data_table["Valencia_pressure"] = data_table["Valencia_pressure"].fillna(vp_mean)
-        
+
         return data_table
 
-    df_clean_train = data_cleaning_one(feature_vector_df)
-    # df_clean_test = data_cleaning_one(df_test)
 
-    predict_vector = df_clean_train[
-        'Madrid_wind_speed', 'Valencia_wind_deg', 'Bilbao_rain_1h',
-       'Valencia_wind_speed', 'Seville_humidity', 'Madrid_humidity',
-       'Bilbao_clouds_all', 'Bilbao_wind_speed', 'Seville_clouds_all',
-       'Bilbao_wind_deg', 'Barcelona_wind_speed', 'Barcelona_wind_deg',
-       'Madrid_clouds_all', 'Seville_wind_speed', 'Barcelona_rain_1h',
-       'Seville_pressure', 'Seville_rain_1h', 'Bilbao_snow_3h',
-       'Barcelona_pressure', 'Seville_rain_3h', 'Madrid_rain_1h',
-       'Barcelona_rain_3h', 'Valencia_snow_3h', 'Madrid_weather_id',
-       'Barcelona_weather_id', 'Bilbao_pressure', 'Seville_weather_id',
-       'Valencia_pressure', 'Seville_temp_max', 'Madrid_pressure',
-       'Valencia_temp_max', 'Valencia_temp', 'Bilbao_weather_id',
-       'Seville_temp', 'Valencia_humidity', 'Valencia_temp_min',
-       'Barcelona_temp_max', 'Madrid_temp_max', 'Barcelona_temp',
-       'Bilbao_temp_min', 'Bilbao_temp', 'Barcelona_temp_min',
-       'Bilbao_temp_max', 'Seville_temp_min', 'Madrid_temp', 'Madrid_temp_min', 
-       'date', 'time_in_hrs'
-    ]
+    feature_vector_df = data_cleaning_one(feature_vector_df)
+
+    predict_vector = feature_vector_df[['Madrid_wind_speed', 'Valencia_wind_deg', 'Bilbao_rain_1h',
+    'Valencia_wind_speed', 'Seville_humidity', 'Madrid_humidity',
+    'Bilbao_clouds_all', 'Bilbao_wind_speed', 'Seville_clouds_all',
+    'Bilbao_wind_deg', 'Barcelona_wind_speed', 'Barcelona_wind_deg',
+    'Madrid_clouds_all', 'Seville_wind_speed', 'Barcelona_rain_1h',
+    'Seville_pressure', 'Seville_rain_1h', 'Bilbao_snow_3h',
+    'Barcelona_pressure', 'Seville_rain_3h', 'Madrid_rain_1h',
+    'Barcelona_rain_3h', 'Valencia_snow_3h', 'Madrid_weather_id',
+    'Barcelona_weather_id', 'Bilbao_pressure', 'Seville_weather_id',
+    'Valencia_pressure', 'Seville_temp_max', 'Madrid_pressure',
+    'Valencia_temp_max', 'Valencia_temp', 'Bilbao_weather_id',
+    'Seville_temp', 'Valencia_humidity', 'Valencia_temp_min',
+    'Barcelona_temp_max', 'Madrid_temp_max', 'Barcelona_temp',
+    'Bilbao_temp_min', 'Bilbao_temp', 'Barcelona_temp_min',
+    'Bilbao_temp_max', 'Seville_temp_min', 'Madrid_temp', 'Madrid_temp_min',
+    'date', 'time_in_hrs']]
     # ------------------------------------------------------------------------
 
     return predict_vector
+
+    
 
 def load_model(path_to_model:str):
     """Adapter function to load our pretrained model into memory.
