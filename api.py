@@ -29,11 +29,12 @@ app = Flask(__name__)
 
 # Load our model into memory.
 # Please update this path to reflect your own trained model.
+model_name = "xgb_model"
 static_model = load_model(
-    path_to_model='assets/trained-models/xgb_model.pkl')
+    path_to_model=f'assets/trained-models/{model_name}.pkl')
 
 print ('-'*40)
-print ('Model successfully loaded')
+print (f'{model_name} Model successfully loaded')
 print ('-'*40)
 
 """ You may use this section (above the app routing function) of the python script to implement 
