@@ -27,7 +27,7 @@ import pandas as pd
 import pickle
 import json
 
-# Additional libraries for data engineering
+# Additional libraries for data preprocessing
 from sklearn.preprocessing import StandardScaler
 from holidays import Spain
 
@@ -65,7 +65,7 @@ def _preprocess_data(data):
     # ----------- Replace this code with your own preprocessing steps --------
     # predict_vector = feature_vector_df[['Madrid_wind_speed','Bilbao_rain_1h','Valencia_wind_speed']]
 
-    # remove missing values/ features
+    # deal with missing values
     def data_cleaning(data_table):
         df = data_table.drop("time", axis=1)  # Get all features excluding "time"
         
